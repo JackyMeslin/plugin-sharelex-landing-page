@@ -1,0 +1,55 @@
+<header class="landing-header">
+  <div class="contents">
+    <div class="primary">
+      <div class="header-title">
+        <a href="<%= path local_assigns[:root] || "/" %>">
+          <%- if local_assigns[:logo_url] || application_logo_url.present? %>
+            <img src="<%= local_assigns[:logo_url] || application_logo_url %>" alt="<%= local_assigns[:title] || SiteSetting.title %>" id="site-logo">
+          <%- else %>
+            <h2 id='site-text-logo'><%= local_assigns[:title] || SiteSetting.title %></h2>
+          <%- end %>
+        </a>
+      </div>
+      <% unless mobile_view? %>
+        <%- if @menu.present? %>
+          <%= render partial: "menu" %>
+        <%- end %>
+      <% end %>
+    </div>
+    <% unless mobile_view? %>
+      <%- if local_assigns[:notice].present? %>
+        <a class="notice" href="<%= local_assigns[:notice][:href] %>">
+          <label class="highlight"><%= local_assigns[:notice][:text] %></label>
+        </a>
+      <%- end %>
+    <% end %>
+    <div class="panel">
+      <span class='header-buttons'>
+        <% if mobile_view? %>
+          <a class="mobile-toggle">
+            <span class="menu-icon"><%= SvgSprite.raw_svg('bars') %></span>
+            <span class="hide-menu-icon"><%= SvgSprite.raw_svg('times') %></span>
+          </a>
+        <% else %>
+          <%- if current_user %>
+            <a href="<%= path "/"%>" class='btn btn-primary forum-button'>
+              <%= I18n.t('landing_pages.go_to_forum') %>
+            </a>
+          <% else %>
+            <a href="<%= path "/login"%>" class='btn btn-primary login-button'>
+              <%= I18n.t('log_in') %>
+            </a>
+          <%- end %>
+        <% end %>
+      </span>
+    </div>
+  </div>
+</header>
+
+<% if mobile_view? %>
+  <%- if @menu.present? %>
+    <div class="mobile-header">
+      <%= render partial: "menu" %>
+    </div>
+  <%- end %>
+<% end %>

@@ -1,0 +1,29 @@
+<article class="topic-list-item <%= local_assigns[:classes] %>" data-topic-id="<%= local_assigns[:topic].id %>">
+  <div class="contents">
+    <a class="topic-image" href="<%= local_assigns[:topic_url] || local_assigns[:topic].url %>">
+      <img src="<%= local_assigns[:topic].image_url.present? ? local_assigns[:topic].image_url : "/plugins/discourse-landing-pages/images/image-placeholder.svg" %>">
+    </a>
+    <div class="topic-details">
+      <a class="topic-link" href="<%= local_assigns[:topic_url] || local_assigns[:topic].url %>">
+        <div class="header">
+          <h2 class="topic-title">
+            <%= emoji_codes_to_img(local_assigns[:topic].fancy_title) %>
+          </h2>
+        </div>
+        <section class="topic-excerpt">
+          <%= "#{local_assigns[:topic].excerpt.split[0...local_assigns[:topic_excerpt_length]].join(' ')} …" %>
+        </section>
+      </a>
+      <div class="topic-meta">
+        <%= render partial: "topic_byline", locals: {
+          topic: local_assigns[:topic],
+          user_profile_opts: {
+            include_avatar: local_assigns[:include_avatar],
+            avatar_size: local_assigns[:avatar_size],
+            profile_details: local_assigns[:profile_details]
+          }
+        } %>
+      </div>
+    </div>
+  </div>
+</article>
