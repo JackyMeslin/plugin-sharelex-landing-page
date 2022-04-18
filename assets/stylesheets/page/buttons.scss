@@ -1,0 +1,26 @@
+@import 'variables';
+
+body.landing-page {
+  .btn {
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 1em;
+    cursor: pointer;
+    color: $primary;
+    background-color: $primary-very-low;
+    text-align: center;
+
+    label {
+      cursor: pointer;
+    }
+
+    &.btn-icon {
+      display: inline-flex;
+    }
+  }
+
+  .btn-primary {
+    background-color: $tertiary;
+    color: $secondary;
+  }
+}

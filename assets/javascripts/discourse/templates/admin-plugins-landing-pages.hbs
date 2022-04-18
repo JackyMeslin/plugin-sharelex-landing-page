@@ -1,0 +1,92 @@
+<div class="page-controls">
+  <div class="page-list-container">
+    {{page-list
+      value=page.id
+      content=pages
+      onChange=(action 'changePage')
+      class="page-select"
+      options=(hash
+        none='admin.landing_pages.page.select'
+      )}}
+    {{d-button
+      action=(action "createPage")
+      label="admin.landing_pages.page.create"
+      class="page-create"
+      icon="plus"}}
+  </div>
+    
+  <div class="buttons">
+    {{#if pullingFromRemote}}
+      {{loading-spinner size="small"}}
+    {{else}}
+      {{#if showCommitsBehind}}
+        {{i18n 'admin.landing_pages.remote.repository.x_commits_behind' count=commitsBehind}}
+      {{/if}}
+    {{/if}}
+
+    {{d-button
+      action=(action "pullFromRemote")
+      label="admin.landing_pages.remote.pull.label"
+      title="admin.landing_pages.remote.pull.description"
+      icon="arrow-down"
+      disabled=pullDisabled}}
+    
+    {{d-button
+      action=(action "updateRemote")
+      title="admin.landing_pages.remote.repository.description"
+      label="admin.landing_pages.remote.repository.label"
+      icon="book"}}
+      
+    {{d-button
+      action=(action "importPages")
+      label="admin.landing_pages.import.button"
+      title="admin.landing_pages.import.description"
+      icon="download"}}
+
+    {{d-button
+      action=(action "toggleShowGlobal")
+      label="admin.landing_pages.global.label"
+      title="admin.landing_pages.global.description"
+      icon="globe"}}
+  </div>
+</div>
+
+<div class="page-message {{messages.status}}">
+  {{#if hasMessages}}
+    <div class="messages">
+      {{#each messages.items as |item|}}
+        <div class="message-block">
+          {{d-icon item.icon}}
+          <span>{{item.text}}</span>
+        </div>
+      {{/each}}
+    </div>
+  {{/if}}
+
+  <div class="message-block">
+    {{d-icon 'question-circle'}}
+        
+    <a href={{documentationUrl}} target="_blank">
+      {{i18n 'admin.landing_pages.documentation'}}
+    </a>
+  </div>
+</div>
+
+{{#if loading}}
+  {{loading-spinner}}
+{{else}}
+  {{#if page}}
+    {{page-admin
+      page=page
+      pages=pages
+      currentPage=currentPage
+      themes=themes
+      groups=groups
+      menus=menus
+      updatePages=(action "updatePages")}}
+  {{/if}}
+  {{#if showGlobal}}
+    {{global-admin
+      global=global}}
+  {{/if}}
+{{/if}}
